@@ -19,6 +19,7 @@ def _normalize(self, p1, p2):
 def widget_helper(klass, func=None, *args, **kwargs):
     """Used to create convenience functions like scrolled()"""
     def retfunc(*children, **properties):
+        properties.update(kwargs)
         ret = klass(*args)
         for child in children:
             if func:
@@ -49,7 +50,9 @@ def boxhelper(container, child):
 def tbhelper(tb, item):
     tb.insert(item, -1)
 
-scrolled = widget_helper(gtk.ScrolledWindow)
+scrolled = widget_helper(gtk.ScrolledWindow,
+    vscrollbar_policy=gtk.POLICY_AUTOMATIC,
+    hscrollbar_policy=gtk.POLICY_AUTOMATIC)
 viewport = widget_helper(gtk.Viewport)
 hbox = widget_helper(gtk.HBox, boxhelper)
 hbuttonbox = widget_helper(gtk.HButtonBox)
