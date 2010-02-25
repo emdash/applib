@@ -228,7 +228,7 @@ class Application(object):
         dlg.destroy()
 
     def _createUI(self):
-        box = gtk.HBox()
+        box = gtk.VBox()
         box.show()
         box.pack_start(self.uiman.get_widget("/mainmenubar"), False, False)
         if self.__documenteditorclass__:
