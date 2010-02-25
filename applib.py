@@ -54,11 +54,11 @@ class Document(object):
 
 class Application(object):
 
-    __apname__ = "Application"
+    __appname__ = "Application"
     __mainwindowclass__ = gtk.Window
     __documentclass__ = Document
     __documenteditorclass__ = None
-    __configpath__ = os.path.expanduser("~/." + __apname__.lower())
+    __configpath__ = os.path.expanduser("~/." + __appname__.lower())
     __defaultsettings__ = {
         "last_document_dir" : os.getcwd(),
     }
