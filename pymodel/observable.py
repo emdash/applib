@@ -31,9 +31,9 @@ Interfaces for event-based programming
 
 from random import randint
 
-class Signallable(object):
+class Observable(object):
     """
-    Signallable interface
+    Signal interface for the observer pattern.
 
     @cvar __signals__: The signals the class can emit as a dictionnary of
      - Key : signal name
@@ -43,8 +43,8 @@ class Signallable(object):
 
     class SignalGroup:
         # internal
-        def __init__(self, signallable):
-            self.siglist = signallable.get_signals()
+        def __init__(self, observable):
+            self.siglist = observable.get_signals()
             # self.ids is a dictionnary of
             # key: signal name (string)
             # value: list of:
@@ -186,6 +186,6 @@ class Signallable(object):
         for cla in cls.mro():
             if "__signals__" in cla.__dict__:
                 sigs.update(cla.__signals__)
-            if cla == Signallable:
+            if cla == Observable:
                 break
         return sigs
