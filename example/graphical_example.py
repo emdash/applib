@@ -1,13 +1,9 @@
 import goocanvas
 import gtk
 import gobject
-from basemodel import BaseModel, property
+from pymodel.basemodel import BaseModel, property
+from applib.timer import Clock
 import math
-
-# a model for time
-class Time(BaseModel):
-
-    time = property(0.0)
 
 # a model for a shape defined with in a box
 class Shape (BaseModel):
@@ -33,24 +29,17 @@ class ShapeItem (goocanvas.Rect):
     def _updateAttribute(self, shape, attrname, old, new):
         self.set_property(attrname, new)
 
-# creates a timer
-time = Time()
-def increment_time():
-    # setting this property here triggers an update of all the properties
-    # which depend on time, even indirectly
-    time.time += 10
-    return True
-gobject.timeout_add(50, increment_time)
+clock = Clock()
 
 shape1 = Shape()
 # define x as a sawtooth function over time (moves to the right but wraps
 # around when it reaches the edge of the window
-shape1.x = lambda : (time.time / 2) % 200
+shape1.x = lambda : (clock.time * 50) % 200
 shape1.y = 50
 # make the shape expand and contract smoothly to a maximum of 100 pixels
 # square
-shape1.width = lambda : 50 * math.sin(time.time / 100.0) + 50
-shape1.height = lambda : 50 * math.sin(time.time / 100.0) + 50
+shape1.width = lambda : 50 * math.sin(clock.time) + 50
+shape1.height = lambda : 50 * math.sin(clock.time) + 50
 
 shape2 = Shape()
 # the second shape is centered within the first shape
